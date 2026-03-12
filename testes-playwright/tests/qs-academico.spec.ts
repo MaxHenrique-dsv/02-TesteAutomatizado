@@ -113,23 +113,19 @@ test.describe('QS Acadêmico — Testes do Sistema de Notas', () => {
 
   // ========== GRUPO 4: Busca por Nome ==========
 
-  test.describe('Busca por Nome', () => {
-
-    test('deve exibir apenas o aluno correspondente ao termo buscado', async ({ page }) => {
-      for (const nome of ['Carlos Menezes', 'Fernanda Lima']) {
-        await page.getByLabel('Nome do Aluno').fill(nome);
-        await page.getByLabel('Nota 1').fill('7');
-        await page.getByLabel('Nota 2').fill('7');
-        await page.getByLabel('Nota 3').fill('7');
-        await page.getByRole('button', { name: 'Cadastrar' }).click();
-      }
-
-      await page.getByPlaceholder('Buscar aluno...').fill('Carlos');
-
-      await expect(page.locator('#tabela-alunos tbody').getByText('Carlos Menezes')).toBeVisible();
-      await expect(page.locator('#tabela-alunos tbody').getByText('Fernanda Lima')).toBeVisible();
-    });
-
+  test('deve exibir apenas o aluno correspondente ao termo buscado', async ({ page }) => {
+    for (const nome of ['Carlos Menezes', 'Fernanda Lima']) {
+      await page.getByLabel('Nome do Aluno').fill(nome);
+      await page.getByLabel('Nota 1').fill('7');
+      await page.getByLabel('Nota 2').fill('7');
+      await page.getByLabel('Nota 3').fill('7');
+      await page.getByRole('button', { name: 'Cadastrar' }).click();
+    }
+  
+    await page.locator('#busca').fill('Carlos');
+  
+    await expect(page.locator('#tabela-alunos tbody').getByText('Carlos Menezes')).toBeVisible();
+    await expect(page.locator('#tabela-alunos tbody').getByText('Fernanda Lima')).not.toBeVisible();
   });
 
   // ========== GRUPO 5: Exclusão ==========
@@ -217,9 +213,9 @@ test.describe('QS Acadêmico — Testes do Sistema de Notas', () => {
         await page.getByRole('button', { name: 'Cadastrar' }).click();
       }
 
-      await expect(page.locator('#total-aprovados')).toHaveText('1');
-      await expect(page.locator('#total-recuperacao')).toHaveText('1');
-      await expect(page.locator('#total-reprovados')).toHaveText('1');
+      await expect(page.locator('#stat-aprovados')).toHaveText('1');
+      await expect(page.locator('#stat-recuperacao')).toHaveText('1');
+      await expect(page.locator('#stat-reprovados')).toHaveText('1');
     });
 
   });
