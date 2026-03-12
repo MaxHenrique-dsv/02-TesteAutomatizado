@@ -76,7 +76,7 @@ test.describe('QS Acadêmico — Testes do Sistema de Notas', () => {
 
       await page.getByRole('button', { name: 'Cadastrar' }).click();
 
-      // Média esperada: (8 + 6 + 10) / 3 = 8.00
+      // Média esperada: (8 + 6 + 10) / 3 = 8.0
       const celulaMedia = page.locator('#tabela-alunos tbody tr').first().locator('td').nth(4);
       await expect(celulaMedia).toHaveText('8.00');
     });
